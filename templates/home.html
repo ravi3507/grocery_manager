@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Grocery Store</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('static/download.jpeg') center/cover no-repeat;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: #ff3c00;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 36px;
+        }
+
+        .button-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        .buttons {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 20px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        .buttons:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        Grocery Store Manager 
+    </div>
+    <div class="button-container">
+        <form action="/customer" method="get">
+            <button class="buttons" type="submit">Customer Login</button>
+        </form>
+        <form action="/manager" method="get">
+            <button class="buttons" type="submit">Manager Login</button>
+        </form>
+    </div>
+
+</body>
+</html>

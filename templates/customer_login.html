@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="margin: 20px auto; max-width: 400px; padding: 20px; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);">
+    <h2 style="text-align: center;">Customer Login</h2>
+    <form method="post">
+        
+        <div style="margin-bottom: 10px;">
+            <label for="username" style="display: block; font-weight: bold;">Email</label>
+            <input type="text" name="username" style="width: 100%; padding: 5px; border: 1px solid #ccc; border-radius: 3px;" id="username" placeholder="Enter your email" required>
+        </div>
+        <div style="margin-bottom: 10px;">
+            <label for="password" style="display: block; font-weight: bold;">Password</label>
+            <input type="password" name="password" style="width: 100%; padding: 5px; border: 1px solid #ccc; border-radius: 3px;" id="password" placeholder="Enter your password" required>
+        </div>
+        <button type="submit" style="background-color: #007bff; color: #fff; padding: 10px 20px; border: none; border-radius: 3px; cursor: pointer;">Submit</button>
+    </form>
+</div>
+{% endblock %}

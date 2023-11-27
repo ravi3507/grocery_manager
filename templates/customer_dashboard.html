@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div style="text-align: center;">
+        <h2>Welcome, <span style="color: #007bff;">{{ username }}</span>!</h2>
+
+        <!-- Search Form -->
+        <form method="post" action="{{ url_for('customer_dashboard', username=username) }}" style="margin-top: 20px;">
+            <input type="text" name="search_query" placeholder="Search for categories or products" style="padding: 5px;">
+            <button type="submit" style="background-color: #007bff; color: white; border: none; padding: 5px 10px; cursor: pointer;">Search</button>
+        </form>
+    </div>
+
+    <!-- Display Search Results -->
+    {% if search_results %}
+    <div style="margin-top: 20px; text-align: left;">
+        <h3>Search Results</h3>
+        <ul style="list-style-type: none; padding-left: 0;">
+            {% for result in search_results %}
+                <li style="margin-top: 10px;">
+                    {% if result['Type'] == 'Category' %}
+                        <a href="{{ url_for('display_category_products', category_id=result['ID']) }}" style="color: #007bff; text-decoration: none;">{{ result['Name'] }}</a>
+                    {% elif result['Type'] == 'Product' %}
+                        <div>
+                            <p><strong>Product:</strong> {{ result['Name'] }}</p>
+                            <p><strong>Price:</strong> Rs {{ result['Price'] }}</p>
+                            <form method="post" action="{{ url_for('add_to_cart', product_id=result['ID']) }}">
+                                <input type="number" name="quantity" placeholder="Quantity" value="1" min="1" style="padding: 5px;">
+                                <button type="submit" style="background-color: #007bff; color: white; border: none; padding: 5px 10px; cursor: pointer;">Add to Cart</button>
+                            </form>
+                        </div>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+        <form action="{{ url_for('customer_dashboard', username='username') }}" method="get" style="margin-top: 20px;">
+            <button type="submit" style="background-color: #007bff; color: white; border: none; padding: 5px 10px; cursor: pointer;">Back to Dashboard</button>
+        </form>
+    </div>
+    {% else %}
+    
+    <div style="margin-top: 20px; text-align: center;">
+        <h3>Available Categories</h3>
+        <div class="row" style="display: flex; justify-content: center;">
+            {% for category in available_categories %}
+                <div class="col-md-3 mb-3" style="margin: 10px; background-color: #f8f9fa; border: 1px solid #dee2e6; padding: 10px;">
+                    <div>
+                        <h5 style="color: #007bff;">{{ category[1] }}</h5>
+                        <a href="{{ url_for('display_category_products', category_id=category[0]) }}" style="background-color: #007bff; color: white; text-decoration: none; padding: 5px 10px; cursor: pointer;">View Products</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% endif %}
+    
+    <div style="text-align: center; margin-top: 20px;">
+        <form action="/" method="get">
+            <button type="submit" style="background-color: #007bff; color: white; border: none; padding: 5px 10px; cursor: pointer;">Logout</button>
+        </form>
+    </div>
+    <div style="text-align: center; margin-top: 20px;">
+        <form action="/customer/cart" method="get">
+            <button type="submit" style="background-color: #007bff; color: white; border: none; padding: 5px 10px; cursor: pointer;">Go to Cart</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
