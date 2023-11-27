@@ -1,0 +1,291 @@
+openapi: 3.0.0
+info:
+  title: MyApp API Documentation
+  version: 1.0.0
+  description: API documentation for the MyApp Flask web application.
+
+paths:
+  /:
+    get:
+      summary: Home Page
+      description: Retrieve the home page of the application.
+      responses:
+        200:
+          description: Successful response
+          content:
+            text/html:
+              example: Home page HTML content here
+
+  /customer:
+    post:
+      summary: User Login
+      description: Log in as a customer user.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+            example:
+              username: user@gmail.com
+              password: user123
+      responses:
+        302:
+          description: Redirect to customer dashboard on successful login
+
+  /manager:
+    post:
+      summary: Manager Login
+      description: Log in as a manager user.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+            example:
+              username: admin@gmail.com
+              password: admin123
+      responses:
+        302:
+          description: Redirect to manager dashboard on successful login
+
+  /manager/create_category:
+    post:
+      summary: Create Category
+      description: Create a new product category.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                category_name:
+                  type: string
+            example:
+              category_name: Electronics
+      responses:
+        302:
+          description: Redirect to manager dashboard after category creation
+
+  /manager/edit_category/{category_id}:
+    post:
+      summary: Edit Category
+      description: Edit an existing product category.
+      parameters:
+        - in: path
+          name: category_id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                new_category_name:
+                  type: string
+            example:
+              new_category_name: Updated Electronics
+      responses:
+        302:
+          description: Redirect to manager dashboard after category edit
+
+  /manager/remove_category/{category_id}:
+    post:
+      summary: Remove Category
+      description: Remove an existing product category.
+      parameters:
+        - in: path
+          name: category_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        302:
+          description: Redirect to manager dashboard after category removal
+
+  /manager/create_product:
+    post:
+      summary: Create Product
+      description: Create a new product.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                product_name:
+                  type: string
+                product_price:
+                  type: number
+                product_quantity:
+                  type: integer
+                category_id:
+                  type: integer
+                product_unit:
+                  type: string
+            example:
+              product_name: New Product
+              product_price: 29.99
+              product_quantity: 50
+              category_id: 1
+              product_unit: Piece
+      responses:
+        302:
+          description: Redirect to manager dashboard after product creation
+
+  /manager/edit_product/{product_id}:
+    post:
+      summary: Edit Product
+      description: Edit an existing product.
+      parameters:
+        - in: path
+          name: product_id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                new_product_price:
+                  type: number
+                new_product_quantity:
+                  type: integer
+            example:
+              new_product_price: 39.99
+              new_product_quantity: 75
+      responses:
+        302:
+          description: Redirect to manager dashboard after product edit
+
+  /manager/remove_product/{product_id}:
+    post:
+      summary: Remove Product
+      description: Remove an existing product.
+      parameters:
+        - in: path
+          name: product_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        302:
+          description: Redirect to manager dashboard after product removal
+
+  /manager/dashboard:
+    get:
+      summary: Manager Dashboard
+      description: View the manager's dashboard with categories and products.
+      responses:
+        200:
+          description: Successful response
+          content:
+            text/html:
+              example: Manager dashboard HTML content here
+
+  /customer/dashboard/{username}:
+    get:
+      summary: Customer Dashboard
+      description: View the customer's dashboard with product categories and search functionality.
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Successful response
+          content:
+            text/html:
+              example: Customer dashboard HTML content here
+
+  /customer/cart:
+    post:
+      summary: Add to Cart
+      description: Add a product to the customer's shopping cart.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: integer
+                quantity:
+                  type: integer
+            example:
+              product_id: 1
+              quantity: 3
+      responses:
+        302:
+          description: Redirect to the cart page after adding to the cart
+
+    get:
+      summary: View Cart
+      description: View the contents of the customer's shopping cart.
+      responses:
+        200:
+          description: Successful response
+          content:
+            text/html:
+              example: Cart page HTML content here
+
+  /customer/cart/remove/{product_id}:
+    post:
+      summary: Remove from Cart
+      description: Remove a product from the customer's shopping cart.
+      parameters:
+        - in: path
+          name: product_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        302:
+          description: Redirect to the cart page after removing from the cart
+
+  /customer/display_category_products/{category_id}:
+    get:
+      summary: Display Category Products
+      description: View products within a specific category.
+      parameters:
+        - in: path
+          name: category_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Successful response
+          content:
+            text/html:
+              example: Category products page HTML content here
+
+  /customer/checkout:
+    post:
+      summary: Checkout
+      description: Checkout and place an order for the items in the customer's cart.
+      responses:
+        302:
+          description: Redirect to the customer's dashboard after checkout
